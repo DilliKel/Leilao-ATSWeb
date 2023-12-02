@@ -1,0 +1,81 @@
+[
+    {
+        "id": 1,
+        "nome_prod": "Monalisa Rock",
+        "descricao": "Obra de arte",
+        "image": "https://s2-techtudo.glbimg.com/SSAPhiaAy_zLTOu3Tr3ZKu2H5vg=/0x0:1024x609/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2022/c/u/15eppqSmeTdHkoAKM0Uw/dall-e-2.jpg",
+        "valor": "0",
+        "time": 60,
+        "sold": false,
+        "startAt": "",
+        "bidders": []
+    },
+    {
+        "id": 2,
+        "nome_prod": "Teemo",
+        "descricao": "Yordle Escoteiro",
+        "image": "https://ruined.dev/_next/image?url=https%3A%2F%2Fddragon.leagueoflegends.com%2Fcdn%2Fimg%2Fchampion%2Fcentered%2FTeemo_0.jpg&w=1200&q=75",
+        "valor": "0",
+        "time": 60,
+        "sold": false,
+        "startAt": "",
+        "bidders": []
+    },
+    {
+        "id": 3,
+        "nome_prod": "Uno",
+        "descricao": "Uno Uno",
+        "image": "https://m.media-amazon.com/images/I/815nAMwl39L.__AC_SX300_SY300_QL70_ML2_.jpg",
+        "valor": "0",
+        "time": 60,
+        "sold": false,
+        "startAt": "",
+        "bidders": []
+    },
+    {
+        "id": 4,
+        "nome_prod": "Uno",
+        "descricao": "Uno Dos",
+        "image": "https://images.mattel.net/image/upload/w_900,h_900,q_60,c_pad/shop-us-prod/products/owemo3cblfmrjbqpg1wy_48b29ea4-43ad-42b1-992f-103a796ff388.jpg",
+        "valor": "0",
+        "time": 60,
+        "sold": false,
+        "startAt": "",
+        "bidders": []
+    },
+    {
+        "id": 5,
+        "nome_prod": "Uno",
+        "descricao": "Fiat Uno",
+        "image": "https://i0.statig.com.br/bancodeimagens/37/dk/hu/37dkhuyj3tzixtgigy86zwsdf.jpg",
+        "valor": "0",
+        "time": 60,
+        "sold": false,
+        "startAt": "",
+        "bidders": []
+    },
+    {
+        "id": 6,
+        "nome_prod": "Uno",
+        "descricao": "Fiat Uno Dois",
+        "image": "https://www.comprecar.com.br/storage/news/featured/616AW_R7V4uI_rL.jpg",
+        "valor": "0",
+        "time": 60,
+        "sold": false,
+        "startAt": "",
+        "bidders": []
+    },
+    {
+        "id": 7,
+        "nome_prod": "Sacochila",
+        "descricao": "Sacochila da Nexus",
+        "image": "https://produto-cheers.s3.amazonaws.com/media/product/982d37d45ab6b4bcc193e0d8108ceeb762a862297ee6ab41825818d1a7bf2a82.png",
+        "valor": "0",
+        "time": 60,
+        "sold": false,
+        "startAt": "",
+        "bidders": []
+    }
+]
+
+
