@@ -6,7 +6,7 @@ interface User {
 
 interface LoginModalProps {
   onLogin: (userData: User) => void;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ onLogin, onClose }) => {
