@@ -68,7 +68,7 @@ const Grid: React.FC<GridProps> = ({
                                 console.log(
                                     `Emitting bid event for item ${item.id} by user ${user}`
                                 );
-                                socket.emit("bid", [item.id, user]);
+                                socket.emit("bid", { itemId: item.id, userName: user });
                                 subtractLance();
                             }
                         }} > LANCE </button>

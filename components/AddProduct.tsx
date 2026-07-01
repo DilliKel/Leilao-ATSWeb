@@ -15,12 +15,12 @@ const AddProduct: React.FC<AddProductProps> = ({ closeModal, socket }) => {
     
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        socket.emit("add_item", [
-            nome_prod,
+        socket.emit("add_item", {
+            nomeProd: nome_prod,
             descricao,
             image,
-            new Date().toISOString(), // startAt
-        ]);
+            startAt: new Date().toISOString(),
+        });
         closeModal(); // Close the modal after submitting the form
     };
     return (
