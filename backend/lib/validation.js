@@ -2,7 +2,6 @@ const { z } = require("zod");
 
 const bidSchema = z.object({
   itemId: z.number().int().positive(),
-  userName: z.string().trim().min(1).max(60),
 });
 
 const addItemSchema = z.object({
