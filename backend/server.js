@@ -1,8 +1,11 @@
+require("dotenv").config();
 const http = require("http");
 const { Server } = require("socket.io");
 const originalData = require("./data.json");
 
 const SECOND = 1 * 1000;
+const PORT = process.env.PORT || 3000;
+const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:3001";
 
 let db = originalData;
 const httpServer = http.createServer();
@@ -10,7 +13,7 @@ console.log(new Date());
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:3001",
+    origin: CORS_ORIGIN,
     methods: ["GET", "POST"],
   },
 });
@@ -93,8 +96,6 @@ io.on("connection", (socket) => { //  Evento quando um cliente se conecta.
     io.emit("items", getItems());
 });
 });
-
-const PORT = 3000; 
 
 httpServer.listen(PORT, () => {
   console.log(`Socket.io server is running on port ${PORT}`);
