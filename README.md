@@ -8,7 +8,8 @@ Sistema de leilão online em tempo real: usuários dão lances em itens e veem o
 
 - **Frontend**: Next.js 14 (App Router), React, TypeScript, TailwindCSS
 - **Realtime**: Socket.io (cliente) + Socket.io + Express (servidor, em `backend/`)
-- **Dados**: em memória, inicializados a partir de `backend/data.json` a cada start do servidor (sem persistência ainda — reiniciar o backend zera lances e produtos)
+- **Dados**: SQLite via Prisma (`backend/prisma/`) — itens, usuários e histórico de lances persistem entre reinícios do servidor
+- **Validação**: payloads dos eventos de socket (`bid`, `add_item`) validados com `zod` antes de tocar no banco
 
 ## Como rodar
 
@@ -30,6 +31,8 @@ cp .env.example .env
 ```bash
 cd backend
 npm install
+npx prisma migrate dev   # cria o banco SQLite local (backend/prisma/dev.db)
+npm run db:seed          # popula com os itens de exemplo (backend/data.json)
 npm run dev
 ```
 
@@ -51,13 +54,16 @@ Acesse [http://localhost:3001](http://localhost:3001).
 | `.env` (raiz) | `NEXT_PUBLIC_SOCKET_URL` | URL do servidor Socket.io consumida pelo frontend |
 | `backend/.env` | `PORT` | Porta em que o servidor Socket.io escuta |
 | `backend/.env` | `CORS_ORIGIN` | Origem (URL do frontend) liberada no CORS do servidor |
+| `backend/.env` | `DATABASE_URL` | Conexão do Prisma com o banco SQLite local |
 
 ## Estrutura
 
 ```
-app/            # páginas e entrypoint Next.js (App Router)
-components/     # componentes React (Header, Grid, Login, AddProduct, DashBoard, Footer)
-backend/        # servidor Socket.io (estado em memória, sem persistência)
+app/                # páginas e entrypoint Next.js (App Router)
+components/         # componentes React (Header, Grid, Login, AddProduct, DashBoard, Footer)
+backend/            # servidor Socket.io
+  lib/              # acesso a dados (Prisma), validação (zod) e regras do leilão
+  prisma/           # schema, migrations e seed do banco SQLite
 ```
 
 ## Autor
