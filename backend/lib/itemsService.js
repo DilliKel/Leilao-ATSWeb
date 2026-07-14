@@ -3,6 +3,7 @@ const prisma = require("./prisma");
 const BID_INCREMENT = 0.01;
 const BID_TIME_RESET = 60;
 const NEW_ITEM_TIME = 60;
+const RESTART_DELAY_MS = 10 * 1000;
 
 function toClientItem(item) {
   return {
@@ -47,16 +48,31 @@ async function getSoldItems() {
   return items.map(toClientItem);
 }
 
-// Roda a cada tick do relógio do leilão: avança o tempo restante e marca como vendido quem chegou a zero.
+// Roda a cada tick do relógio do leilão: avança o tempo restante, marca como vendido quem
+// chegou a zero com lance, e devolve pro leilão (depois de RESTART_DELAY_MS) quem chegou a
+// zero sem nenhum lance.
 async function tick() {
   await prisma.item.updateMany({
     where: { sold: false, time: { gt: 0 } },
     data: { time: { decrement: 1 } },
   });
 
+  // Item que zerou e teve pelo menos um lance: encerra como vendido.
   await prisma.item.updateMany({
-    where: { sold: false, time: { lte: 0 } },
+    where: { sold: false, time: { lte: 0 }, expiredAt: null, bids: { some: {} } },
     data: { sold: true },
+  });
+
+  // Item que zerou sem nenhum lance: marca o momento em que expirou, pra voltar depois.
+  await prisma.item.updateMany({
+    where: { sold: false, time: { lte: 0 }, expiredAt: null, bids: { none: {} } },
+    data: { expiredAt: new Date() },
+  });
+
+  // Passou o tempo de espera: volta pro leilão do zero.
+  await prisma.item.updateMany({
+    where: { sold: false, expiredAt: { lte: new Date(Date.now() - RESTART_DELAY_MS) } },
+    data: { time: NEW_ITEM_TIME, expiredAt: null },
   });
 }
 

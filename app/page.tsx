@@ -57,7 +57,7 @@ export default function Home() {
     };
 
     useEffect(() => {
-        if (status !== "authenticated" || socket) {
+        if (status !== "authenticated") {
             return;
         }
 
@@ -78,7 +78,8 @@ export default function Home() {
             cancelled = true;
             activeSocket?.disconnect();
         };
-    }, [status, socket]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [status]);
 
     useEffect(() => {
         if (!socket) {

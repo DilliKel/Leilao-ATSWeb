@@ -20,15 +20,16 @@ model User {
 }
 
 model Item {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   nomeProd    String
   descricao   String
   image       String
-  valor       Float    @default(0)
-  time        Int      @default(60)
-  sold        Boolean  @default(false)
-  startAt     DateTime @default(now())
-  createdAt   DateTime @default(now())
+  valor       Float     @default(0)
+  time        Int       @default(60)
+  sold        Boolean   @default(false)
+  expiredAt   DateTime?
+  startAt     DateTime  @default(now())
+  createdAt   DateTime  @default(now())
   bids        Bid[]
 }
 
