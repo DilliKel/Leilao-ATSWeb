@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 
 interface HeaderProps {
@@ -7,37 +6,24 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onLogout }) => {
     return (
-        <header className="bg-stone-800 border-b border-emerald-100 w-screen fixed top-0">
-            <div className="mx-auto max-w-4xl sm:px-6 lg:px-8 h-16">
-                {/*<!-- lg+ -->*/}
-                <nav className="flex items-center justify-center h-12 lg:h-16">
-                    <div className="flex-shrink-0">
-                        <a href="#" title="" className="flex">
-                            <img
-                                src="/logo.png"
-                                alt="leilão legal logo"
-                                onClick={onLogout}
-                                width={150}
-                                height={150}
-                            />
-                        </a>
-                    </div>
-                </nav>
-
-                {/*<!-- xs to lg -->*/}
-                <nav className="min-h-1/3 px-4 py-10 text-center bg-stone-800 md:hidden">
-                    <div className="flex-shrink-0">+
-                        <a href="#" title="" className="flex">
-                            <img
-                                src="/logo.png"
-                                alt="leilão legal logo"
-                                onClick={onLogout}
-                                width={200}
-                                height={200}
-                            />
-                        </a>
-                    </div>
-                </nav>
+        <header className="fixed top-0 z-40 w-screen border-b border-white/10 bg-zinc-950/80 backdrop-blur-md">
+            <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center gap-3">
+                    <img
+                        src="/logo.png"
+                        alt="Leilão Legal"
+                        className="h-9 w-9 rounded-full object-cover ring-1 ring-amber-400/40"
+                    />
+                    <span className="font-display text-lg tracking-wide text-amber-300">
+                        Leilão Legal
+                    </span>
+                </div>
+                <button
+                    onClick={onLogout}
+                    className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-zinc-300 transition hover:border-amber-400/40 hover:text-amber-300"
+                >
+                    Sair
+                </button>
             </div>
         </header>
     );

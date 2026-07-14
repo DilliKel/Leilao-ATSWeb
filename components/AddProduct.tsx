@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { Socket } from "socket.io-client"; // Import the Socket type
+import { Socket } from "socket.io-client";
 
 interface AddProductProps {
-    closeModal: () => void; // closeModal is a function that doesn't return anything
-    socket: Socket; // socket is of type Socket
+    closeModal: () => void;
+    socket: Socket;
 }
 
+const inputClass =
+    "w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-zinc-100 placeholder-zinc-500 outline-none transition focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/40";
+
 const AddProduct: React.FC<AddProductProps> = ({ closeModal, socket }) => {
-    // Add closeModal prop
     const [nome_prod, setnome_prod] = useState("");
-    const [valor, setvalor] = useState(0);
     const [descricao, setdescricao] = useState("");
     const [image, setimage] = useState("");
-    
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         socket.emit("add_item", {
@@ -21,64 +22,62 @@ const AddProduct: React.FC<AddProductProps> = ({ closeModal, socket }) => {
             image,
             startAt: new Date().toISOString(),
         });
-        closeModal(); // Close the modal after submitting the form
+        closeModal();
     };
+
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-        {/* Add these classes */}
-        <div className="bg-slate-400 p-4 rounded shadow-lg">
-        {/* Add a background color, padding, rounded corners, and a shadow */}
-        <button
-        className="bg-red-600 hover:bg-red-900 text-white font-bold py-2 px-4 rounded"
-        onClick={closeModal}    
-        > X </button>
-        <h2 className="text-lg w-full text-center mb-2"><strong>Cadastrar Novo Produto</strong></h2>
-        <div className="">
-        <form onSubmit={handleSubmit} className="p-6 bg-white rounded shadow-lg">
-        <input
-        type="text"
-        className="w-full p-2 mb-3 border border-gray-300 rounded text-slate-900"
-        placeholder="Nome do Produto"
-        name="nome_prod"
-        value={nome_prod}
-        onChange={(e) => setnome_prod(e.target.value)}
-        required
-        />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/80 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-md animate-fade-in rounded-2xl border border-white/10 bg-zinc-900/70 p-6 shadow-2xl backdrop-blur-xl">
+                <div className="mb-4 flex items-center justify-between">
+                    <h2 className="font-display text-xl text-amber-300">Cadastrar novo produto</h2>
+                    <button
+                        onClick={closeModal}
+                        className="rounded-full p-1 text-zinc-400 transition hover:bg-white/10 hover:text-zinc-100"
+                        aria-label="Fechar"
+                    >
+                        ✕
+                    </button>
+                </div>
 
-        <input
-        type="text"
-        className="w-full p-2 mb-3 border border-gray-300 rounded text-slate-900 overflow-scroll"
-        placeholder={"Digite a Descricao do " + (nome_prod ? false : "Produto")}
-        name="descricao"
-        value={descricao}
-        onChange={(e) =>
-            setdescricao(e.target.value)
-        } 
-        required
-        />
-        
-        <input
-        type="text"
-        className="w-full p-2 mb-3 border border-gray-300 rounded text-slate-900 overflow-scroll"
-        placeholder={"Insira o URL da imagem " + nome_prod}
-        name="image"
-        value={image}
-        onChange={(e) =>
-            setimage(e.target.value)
-        } 
-        required
-        />
-        
-        <button className="w-full p-2 text-white font-bold bg-blue-500 rounded hover:bg-blue-700 rounded-full" type="submit">
-        Concluir
-        </button>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <input
+                        type="text"
+                        className={inputClass}
+                        placeholder="Nome do produto"
+                        name="nome_prod"
+                        value={nome_prod}
+                        onChange={(e) => setnome_prod(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="text"
+                        className={inputClass}
+                        placeholder="Descrição do produto"
+                        name="descricao"
+                        value={descricao}
+                        onChange={(e) => setdescricao(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="text"
+                        className={inputClass}
+                        placeholder="URL da imagem"
+                        name="image"
+                        value={image}
+                        onChange={(e) => setimage(e.target.value)}
+                        required
+                    />
 
-        </form>
+                    <button
+                        className="w-full rounded-lg bg-gradient-to-r from-amber-500 to-amber-400 py-2.5 font-semibold text-zinc-950 shadow-gold transition hover:from-amber-400 hover:to-amber-300"
+                        type="submit"
+                    >
+                        Concluir
+                    </button>
+                </form>
+            </div>
         </div>
-        </div>
-        </div>
-        );
-    };
-    
-    export default AddProduct;
-    
+    );
+};
+
+export default AddProduct;

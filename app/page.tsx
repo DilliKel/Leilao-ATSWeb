@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Socket } from "socket.io-client";
 import DashBoard from "@/components/DashBoard";
@@ -41,13 +41,13 @@ export default function Home() {
         setLances(lances + 5);
     };
 
-    const pushNotification = (message: string) => {
+    const pushNotification = useCallback((message: string) => {
         setNotifications((current) => [...current, { id: nextToastId++, message }]);
-    };
+    }, []);
 
-    const dismissNotification = (id: number) => {
+    const dismissNotification = useCallback((id: number) => {
         setNotifications((current) => current.filter((n) => n.id !== id));
-    };
+    }, []);
 
     const handleLogout = () => {
         socket?.disconnect();
@@ -124,7 +124,7 @@ export default function Home() {
             socket.off("winners");
             socket.off("bid_rejected");
         };
-    }, [socket, session?.user?.name]);
+    }, [socket, session?.user?.name, pushNotification]);
 
     return (
         <main className="flex w-screen h-screen flex-col justify-center items-center  overflow-hidden">
@@ -133,8 +133,8 @@ export default function Home() {
             {status !== "authenticated" && <LoginModal />}
 
             {status === "loading" && (
-                <div className="flex flex-col items-center gap-3 text-white">
-                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-green-500 border-t-transparent" />
+                <div className="flex flex-col items-center gap-3 text-zinc-300">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-amber-400 border-t-transparent" />
                     <p>Carregando sessão...</p>
                 </div>
             )}
@@ -151,10 +151,11 @@ export default function Home() {
                             lances={lances}
                             subtractLance={subtractLance}
                             addLances={addLances}
+                            notify={pushNotification}
                         />
                     ) : (
-                        <div className="flex flex-col items-center justify-center gap-3 h-screen text-white">
-                            <div className="h-10 w-10 animate-spin rounded-full border-4 border-green-500 border-t-transparent" />
+                        <div className="flex h-screen flex-col items-center justify-center gap-3 text-zinc-300">
+                            <div className="h-10 w-10 animate-spin rounded-full border-4 border-amber-400 border-t-transparent" />
                             <p>{socket ? "Carregando itens do leilão..." : "Conectando ao leilão..."}</p>
                         </div>
                     )}

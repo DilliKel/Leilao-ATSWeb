@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 
+const inputClass =
+  "w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-zinc-100 placeholder-zinc-500 outline-none transition focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/40";
+
+const labelClass = "mb-1 block text-xs font-medium uppercase tracking-wide text-zinc-400";
+
 const LoginModal: React.FC = () => {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [name, setName] = useState("");
@@ -45,38 +50,44 @@ const LoginModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
-          {mode === "login" ? "Bem-vindo de volta!" : "Criar conta"}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/80 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-md animate-fade-in rounded-2xl border border-white/10 bg-zinc-900/70 p-8 shadow-2xl backdrop-blur-xl">
+        <h2 className="font-display text-center text-3xl text-amber-300">
+          {mode === "login" ? "Bem-vindo de volta" : "Criar conta"}
         </h2>
-        <form onSubmit={handleSubmit}>
+        <p className="mb-6 mt-1 text-center text-sm text-zinc-400">
+          {mode === "login"
+            ? "Entre para participar dos leilões ao vivo"
+            : "Cadastre-se para dar seus lances"}
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           {mode === "register" && (
-            <div className="mb-4">
-              <label className="block text-gray-600">Nome</label>
+            <div>
+              <label className={labelClass}>Nome</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Seu nome"
                 required
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-gray-900"
+                className={inputClass}
               />
             </div>
           )}
-          <div className="mb-4">
-            <label className="block text-gray-600">E-mail</label>
+          <div>
+            <label className={labelClass}>E-mail</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="voce@exemplo.com"
               required
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-gray-900"
+              className={inputClass}
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-600">Senha</label>
+          <div>
+            <label className={labelClass}>Senha</label>
             <input
               type="password"
               value={password}
@@ -84,16 +95,16 @@ const LoginModal: React.FC = () => {
               placeholder="••••••••"
               required
               minLength={6}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-gray-900"
+              className={inputClass}
             />
           </div>
 
-          {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
+          {error && <p className="text-sm text-red-400">{error}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full p-2 bg-green-500 text-white rounded hover:bg-green-700 disabled:opacity-50"
+            className="w-full rounded-lg bg-gradient-to-r from-amber-500 to-amber-400 py-2.5 font-semibold text-zinc-950 shadow-gold transition hover:from-amber-400 hover:to-amber-300 disabled:opacity-50"
           >
             {loading ? "Aguarde..." : mode === "login" ? "Entrar" : "Criar conta e entrar"}
           </button>
@@ -105,7 +116,7 @@ const LoginModal: React.FC = () => {
             setError("");
             setMode(mode === "login" ? "register" : "login");
           }}
-          className="w-full mt-3 text-sm text-blue-600 hover:underline"
+          className="mt-4 w-full text-center text-sm text-amber-400/80 transition hover:text-amber-300 hover:underline"
         >
           {mode === "login" ? "Não tem conta? Cadastre-se" : "Já tem conta? Entrar"}
         </button>

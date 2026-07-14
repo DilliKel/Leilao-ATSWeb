@@ -14,32 +14,33 @@ interface BidHistoryProps {
 
 const BidHistory: React.FC<BidHistoryProps> = ({ itemName, entries, onClose }) => {
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <div className="bg-white rounded shadow-lg p-4 max-w-md w-full max-h-[80vh] overflow-y-auto">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-bold text-zinc-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/80 p-4 backdrop-blur-sm">
+            <div className="max-h-[80vh] w-full max-w-md animate-fade-in overflow-y-auto rounded-2xl border border-white/10 bg-zinc-900/70 p-6 shadow-2xl backdrop-blur-xl">
+                <div className="mb-4 flex items-center justify-between">
+                    <h2 className="font-display text-xl text-amber-300">
                         Histórico — {itemName}
                     </h2>
                     <button
                         onClick={onClose}
-                        className="bg-red-600 hover:bg-red-900 text-white font-bold py-1 px-3 rounded"
+                        className="rounded-full p-1 text-zinc-400 transition hover:bg-white/10 hover:text-zinc-100"
+                        aria-label="Fechar"
                     >
-                        X
+                        ✕
                     </button>
                 </div>
 
                 {entries.length === 0 ? (
-                    <p className="text-zinc-600">Nenhum lance registrado ainda.</p>
+                    <p className="text-zinc-400">Nenhum lance registrado ainda.</p>
                 ) : (
                     <ul className="space-y-2">
                         {entries.map((entry, index) => (
                             <li
                                 key={index}
-                                className="flex justify-between items-center border-b border-gray-200 pb-1 text-zinc-900"
+                                className="flex items-center justify-between gap-2 border-b border-white/10 pb-2 text-sm text-zinc-200"
                             >
-                                <span className="font-semibold">{entry.userName}</span>
-                                <span>R$ {entry.valor.toFixed(2)}</span>
-                                <span className="text-xs text-zinc-500">
+                                <span className="truncate font-medium text-zinc-100">{entry.userName}</span>
+                                <span className="whitespace-nowrap text-amber-300">R$ {entry.valor.toFixed(2)}</span>
+                                <span className="whitespace-nowrap text-xs text-zinc-500">
                                     {new Date(entry.createdAt).toLocaleTimeString("pt-BR")}
                                 </span>
                             </li>

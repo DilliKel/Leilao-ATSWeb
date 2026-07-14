@@ -1,16 +1,20 @@
 import Link from "next/link";
 import React from "react";
 
-export default function Home() {
+export default function Footer() {
     return (
-        <div className=" border-t border-gray-100 p-3 w-screen h-10 fixed bottom-0 bg-stone-800 z-10">
-            <div className="flex justify-between text-sm/relaxed text-gray-500">
-                <div className="flex justify-center w-1/2 ">
-                    <p className="pr-2">©</p>
-                    <Link href="https://github.com/DilliKel" className="text-green-500 transition hover:text-green-500/75 font- pr-2"> Kelvin Dev (Kelvin Dilli) </Link>
-                    <p className="pr-2">2023.</p>
-                </div>
+        <footer className="fixed bottom-0 z-30 w-screen border-t border-white/10 bg-zinc-950/80 px-4 py-2 backdrop-blur-md">
+            <div className="mx-auto flex max-w-6xl items-center justify-center text-xs text-zinc-500">
+                <p>
+                    © 2023{" "}
+                    <Link
+                        href="https://github.com/DilliKel"
+                        className="text-amber-400/80 transition hover:text-amber-300"
+                    >
+                        Kelvin Dev (Kelvin Dilli)
+                    </Link>
+                </p>
             </div>
-        </div>
+        </footer>
     );
 }

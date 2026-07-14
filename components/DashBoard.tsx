@@ -23,9 +23,10 @@ interface DashBoardProps {
     lances: number;
     subtractLance: () => void;
     addLances: () => void;
+    notify: (message: string) => void;
 }
 
-export default function DashBoard({ items, winners, socket, user, lances, subtractLance, addLances }: DashBoardProps) {
+export default function DashBoard({ items, winners, socket, user, lances, subtractLance, addLances, notify }: DashBoardProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isWinnersOpen, setIsWinnersOpen] = useState(false);
 
@@ -37,40 +38,43 @@ export default function DashBoard({ items, winners, socket, user, lances, subtra
     };
 
     return (
-        <div className={"flex flex-col w-screen h-screen p-4 bg-teal-950 overflow-clip pt-20 overflow-y-scroll"}>
-
-            <div className="flex text-green-600 text-sm/relaxed bg-stone-800 justify-around items-center rounded min-h-fit p-3">
-
-                <div className="flex items-center justify-around w-1/2 ">
-                    <p>
-                        <strong>Conta Logada:</strong>
-                    </p>
-                    <p>
-                        {user}
-                    </p>
-                    <p>
-                        <strong>Lances: {lances}</strong>
-                    </p>
+        <div className="flex h-screen w-screen flex-col overflow-y-scroll p-4 pb-16 pt-20">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-zinc-900/60 p-3 backdrop-blur-md">
+                <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-zinc-300">
+                        <span className="text-zinc-500">Conta:</span>
+                        <span className="font-medium text-zinc-100">{user}</span>
+                    </div>
+                    <div className="flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1.5 text-sm text-amber-300">
+                        <span className="font-semibold">{lances}</span>
+                        <span>lances</span>
+                    </div>
                     <button
                         onClick={addLances}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"> Comprar +5 Lances </button>
+                        className="rounded-full bg-gradient-to-r from-amber-500 to-amber-400 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition hover:from-amber-400 hover:to-amber-300"
+                    >
+                        + 5 lances
+                    </button>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                     <button
                         onClick={() => setIsWinnersOpen(true)}
-                        className="bg-stone-600 hover:bg-stone-500 text-white font-bold py-2 px-4 rounded"> Leilões encerrados ({winners.length}) </button>
+                        className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-zinc-300 transition hover:border-amber-400/40 hover:text-amber-300"
+                    >
+                        Leilões encerrados ({winners.length})
+                    </button>
                     <button
                         onClick={openModal}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"> Cadastrar novo produto </button>
+                        className="rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-1.5 text-sm font-medium text-amber-300 transition hover:bg-amber-400/20"
+                    >
+                        + Cadastrar produto
+                    </button>
                 </div>
             </div>
-            <section className="flex mt-2 justify-center">
-                <Grid items={items} socket={socket} user={user} lances={lances} subtractLance={subtractLance} />
-                {isModalOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center backdrop-filter backdrop-blur z-50">
-                        <AddProduct closeModal={closeModal} socket={socket} />
-                    </div>
-                )}
+
+            <section className="mt-4 flex justify-center">
+                <Grid items={items} socket={socket} user={user} lances={lances} subtractLance={subtractLance} notify={notify} />
+                {isModalOpen && <AddProduct closeModal={closeModal} socket={socket} />}
                 {isWinnersOpen && (
                     <Winners winners={winners} onClose={() => setIsWinnersOpen(false)} />
                 )}
