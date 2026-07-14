@@ -1,7 +1,9 @@
 const { z } = require("zod");
 
+const itemIdSchema = z.number().int().positive();
+
 const bidSchema = z.object({
-  itemId: z.number().int().positive(),
+  itemId: itemIdSchema,
 });
 
 const addItemSchema = z.object({
@@ -11,4 +13,4 @@ const addItemSchema = z.object({
   startAt: z.string().datetime().optional(),
 });
 
-module.exports = { bidSchema, addItemSchema };
+module.exports = { bidSchema, addItemSchema, itemIdSchema };

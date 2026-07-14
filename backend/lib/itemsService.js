@@ -87,6 +87,20 @@ async function placeBid({ itemId, userName }) {
   return true;
 }
 
+async function getItemHistory(itemId) {
+  const bids = await prisma.bid.findMany({
+    where: { itemId },
+    include: { user: true },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return bids.map((bid) => ({
+    userName: bid.user.name,
+    valor: bid.valor,
+    createdAt: bid.createdAt.toISOString(),
+  }));
+}
+
 async function addItem({ nomeProd, descricao, image, startAt }) {
   const item = await prisma.item.create({
     data: {
@@ -101,4 +115,4 @@ async function addItem({ nomeProd, descricao, image, startAt }) {
   return item;
 }
 
-module.exports = { getItems, getSoldItems, tick, placeBid, addItem };
+module.exports = { getItems, getSoldItems, tick, placeBid, addItem, getItemHistory };
