@@ -15,6 +15,23 @@ const config: Config = {
             lg: ["20px", "28px"],
             xl: ["24px", "32px"],
         },
+        extend: {
+            fontFamily: {
+                display: ["var(--font-display)", "serif"],
+            },
+            boxShadow: {
+                gold: "0 0 0 1px rgba(251,191,36,0.35), 0 12px 32px -12px rgba(251,191,36,0.45)",
+            },
+            keyframes: {
+                "fade-in": {
+                    "0%": { opacity: "0", transform: "translateY(6px)" },
+                    "100%": { opacity: "1", transform: "translateY(0)" },
+                },
+            },
+            animation: {
+                "fade-in": "fade-in 0.25s ease-out forwards",
+            },
+        },
     },
     plugins: [],
 };
