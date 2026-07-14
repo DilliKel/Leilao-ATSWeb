@@ -64,17 +64,6 @@
         "sold": false,
         "startAt": "",
         "bidders": []
-    },
-    {
-        "id": 7,
-        "nome_prod": "Sacochila",
-        "descricao": "Sacochila da Nexus",
-        "image": "https://produto-cheers.s3.amazonaws.com/media/product/982d37d45ab6b4bcc193e0d8108ceeb762a862297ee6ab41825818d1a7bf2a82.png",
-        "valor": "0",
-        "time": 60,
-        "sold": false,
-        "startAt": "",
-        "bidders": []
     }
 ]
 
