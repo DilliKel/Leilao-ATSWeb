@@ -13,6 +13,15 @@ Sistema de leilão online em tempo real: usuários dão lances em itens e veem o
 - **Validação**: payloads das rotas de API e dos eventos de socket (`bid`, `add_item`) validados com `zod` antes de tocar no banco
 - **Conexão do socket protegida**: o frontend só conecta ao servidor Socket.io depois de logado, usando um token JWT de curta duração emitido por `/api/socket-token` e verificado pelo backend no handshake — conexões sem token são rejeitadas
 
+## Funcionalidades
+
+- Lances em tempo real com timer visual (barra de progresso, fica vermelha nos últimos 10s)
+- Histórico completo de lances por item (usuário, valor e horário de cada lance)
+- Notificação (toast) quando você é superado em um item, e quando um lance é rejeitado (rate limit ou item já encerrado)
+- Tela de "leilões encerrados" com o valor final e o vencedor de cada item
+- Rate limiting no backend: no mínimo 400ms entre lances do mesmo usuário, mesmo em itens diferentes
+- Grid responsivo (2 colunas no mobile até 8 no desktop) e loading states dedicados para sessão, conexão do socket e carregamento dos itens
+
 ## Como rodar
 
 O projeto tem **dois processos separados** que precisam rodar ao mesmo tempo: o frontend Next.js e o servidor Socket.io.
@@ -79,7 +88,8 @@ app/                # páginas, rotas de API e entrypoint Next.js (App Router)
   api/socket-token/  # emite o JWT usado para autenticar a conexão do socket
 lib/                # cliente Prisma e configuração do NextAuth (frontend)
 prisma/             # schema, migrations do banco de usuários (autenticação)
-components/         # componentes React (Header, Grid, Login, AddProduct, DashBoard, Footer)
+components/         # componentes React (Header, Grid, Login, AddProduct, DashBoard, Footer,
+                    #   BidHistory, Winners, Toast)
 backend/            # servidor Socket.io
   lib/              # acesso a dados (Prisma), validação (zod) e regras do leilão
   prisma/           # schema, migrations e seed do banco de itens/lances
