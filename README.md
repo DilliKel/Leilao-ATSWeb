@@ -4,6 +4,8 @@ Projeto 4 da matéria **Arquitetura e Tecnologias de Sistemas Web (DCC704)**.
 
 Sistema de leilão online em tempo real: usuários dão lances em itens e veem o valor, o último lance e o tempo restante atualizarem instantaneamente para todos os participantes conectados, via WebSocket.
 
+![Dashboard do Leilão Legal](./docs/screenshot-dashboard.png)
+
 ## Stack
 
 - **Frontend**: Next.js 14 (App Router), React, TypeScript, TailwindCSS
