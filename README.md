@@ -6,6 +6,10 @@ Sistema de leilão online em tempo real: usuários dão lances em itens e veem o
 
 ![Dashboard do Leilão Legal](./docs/screenshot-dashboard.png)
 
+### Demonstração
+
+![Demonstração de um lance em tempo real](./docs/lances-leilao.gif)
+
 ## Stack
 
 - **Frontend**: Next.js 14 (App Router), React, TypeScript, TailwindCSS
